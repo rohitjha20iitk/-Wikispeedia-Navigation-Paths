@@ -1,0 +1,130 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
+\makeatother
+
+
+\usepackage{lipsum}
+\usepackage[top=1in,bottom=1in,left=2.6cm,right=2.6cm]{geometry}
+
+\titleformat{\chapter}[display]{\normalfont\bfseries}{}{0pt}{\Huge}
+
+
+\title{\textbf{Report} \\[6mm] \textbf{Analysis on human navigation paths on Wikipedia} \\[1.5cm]  \includegraphics[scale=0.8]{logo}}
+\author{\textbf{Rohit Raj} \\\textbf{M.Tech}\\ \textbf{20111051}\\\textbf{Assignment - 2}}
+\date{\textbf{Indian Institute of Technology,Kanpur} \\\textbf{Computer Science and Engineering} \\\textbf{Subject - Data Mining (CS685A)}\\\textbf{Academic Year 2020 - 2022} \\[5mm]\textbf{\today}}
+
+
+\begin{document}
+
+
+\maketitle
+
+\chapter{Abstract}
+
+\begin{flushleft}
+This report contains analysis of human navigation paths on Wikipedia, collected through the human-computation game \textbf{Wikispeedia}. In \textbf{Wikispeedia}, users are asked to navigate from a given source to a given target article, by only clicking Wikipedia links. The player must start at one article and reach the second one (the target article) exclusively by following hyperlinks found in the encountered pages. The goal is to minimize the number of intermediate articles to get to the target article.\newline
+Dataset statistics :
+\begin{itemize}
+    \item Finished paths - \textbf{51306}
+    \item Unifinished paths - \textbf{24875}
+    \item Articles - \textbf{4604}
+\end{itemize}
+
+
+\end{flushleft}
+
+\newpage
+\chapter{Analysis}
+\begin{flushleft}
+
+\begin{enumerate}
+    \item The assignment is used to analyze the way in which the players navigate from source to target article. If the players chose to navigate via unrelated article, they may need to navigate more nodes in order to reach the target, or they may never reach the target.
+    \item On the other hand, if they navigate through related articles, they may reach the target faster. 
+    \item The best path would be the shortest path possible to reach the target. It is not necessary that a player always chooses the shortest path for the navigation. 
+    \item The assignment analyzes the human traversed paths and also evaluates the shortest possible paths and distances from any source to target article.
+\end{enumerate}
+    
+\subsection*{Question 1}
+All the articles given in \textbf{articles.tsv} are assigned unique ids starting from \textbf{A0001} to \textbf{A4604}.
+
+\subsection*{Question 2}
+All the categories given in \textbf{categories.tsv} are first converted
+into a hierarchy with \textbf{subject} as root node and are then assigned unique ids
+starting from \textbf{C0001} to \textbf{C0146} in \textbf{BFS} order (sorted alphabetically). The depth of tree is \textbf{3}.
+
+\subsection*{Question 3}
+The file \textbf{categories.tsv} provides the details of the categories an
+article belongs to. The maximum number of times an article can belong to a category is \textbf{3}.
+
+\subsection*{Question 4}
+The file \textbf{shortest-path-distance-matrix.txt} contains a matrix specifying
+the shortest path distance from a source to target. An edge exists between 2 articles if we have value of \textbf{1} in \textbf{shortest-path-distance-matrix.txt}. There are total of \textbf{119772} edges.
+
+\newpage
+
+\subsection*{Question 5}
+An \textbf{undirected graph} to find the connected components. The networkx
+library is used for all these works. There are \textbf{12} isolated nodes. These articles are never reachable. For such nodes, the number of edges and diameter is
+specified as \textbf{0}.
+
+\subsection*{Question 6}
+We have compared the path traversed by the human (for both, with and without
+back-clicks) with the actual shortest path possible between the nodes. A \textbf{directed graph} has been created, and for each path, length of shortest paths has been calculated using the predefined function of \textbf{Networkx} library.
+
+
+\subsection*{Question 7}
+In both cases, there are more human paths which have path length \textbf{1} more than shortest path.
+
+\subsection*{Question 8}
+This question can help in analyzing the number of paths and number of times
+any category has been traversed in both human paths as well as in shortest
+paths. Observations shows that the category \textbf{subject.Countries}
+with category id \textbf{C0005} has been visited the most in both shortest paths as well as in human paths.
+
+\subsection*{Question 9}
+For each category, here we consider its subcategories as well. Since the category
+\textbf{subject} is the root category, it has been traversed the most.
+
+\subsection*{Question 10}
+Using file \textbf{paths\_unfinished.tsv} and \textbf{paths\_finished.tsv} to find the source and destination category pair taking into account all the sub-categories under it and find the percentage of finished and unfinished paths for each category pair.
+
+\subsection*{Question 11}
+Here we computed average ratio of length of human paths (without back clicks) to shortest paths for every source-destination category pair. The largest ratio of \textbf{17.66} has been found for the category pair \textbf{(C0041,C0090)}, while the lowest ratio is \textbf{1} and has been obtained for many pairs.
+
+\end{flushleft}
+
+\newpage
+
+\chapter{Conclusion}
+
+\begin{flushleft}
+The main aim of this assignment is to analyze the visits on each article and each
+category of the Wikipedia links. This analysis can be used for finding trends like most times any link is visited. We can find the \textbf{shortest path} to visit any link, relationships between categories, the most and the least visited articles and
+categories, etc.
+
+\end{flushleft}
+
+\chapter{References}
+
+
+
+\begin{enumerate}
+    \item \url{http://snap.stanford.edu/data/wikispeedia.html}
+    
+    \item \url{http://infolab.stanford.edu/~west1/pubs/West-Pineau-Precup\_IJCAI-09.pdf}
+\end{enumerate}
+
+
+
+
+\end{document}
